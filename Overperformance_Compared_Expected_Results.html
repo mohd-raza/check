@@ -1,6 +1,35 @@
 <html>
-<head><meta charset="utf-8" /></head>
-<body>
+<head><meta charset="utf-8" />
+    <style>
+        /* Define a CSS class to hide the body */
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        async function checkPassword() {
+            const password = prompt("Please enter the password to access this page:");
+            const response = await fetch('https://newsroom-c695.onrender.com/verify-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password })
+            });
+            
+            const result = await response.json();
+            if (response.status === 200 && result.status === 'success') {
+                document.body.classList.remove('hidden');
+            } else {
+                alert('Incorrect password. Access denied.');
+                window.location.href = 'about:blank';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkPassword);
+    </script>
+</head>
+<body class='hidden'>
     <div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
         <script type="text/javascript">/**
 * plotly.js v2.12.1
